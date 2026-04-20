@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialPost — Share Your Thoughts</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== TOP NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg sticky-top" id="mainNavbar">
+    <div class="container-xl">
+      <!-- Brand Logo -->
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <div class="brand-icon">
+          <i class="bi bi-lightning-charge-fill"></i>
+        </div>
+        <span class="brand-name">SocialPost</span>
+      </a>
+
+      <!-- Search Bar (Bonus Feature) -->
+      <div class="navbar-search mx-auto d-none d-md-flex">
+        <div class="search-wrapper">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search by username..."
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="d-flex align-items-center gap-3">
+        <!-- Dark Mode Toggle (Bonus Feature) -->
+        <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+          <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+        </button>
+        <!-- Notification Badge -->
+        <div class="nav-avatar">
+          <i class="bi bi-person-circle"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN LAYOUT ===== -->
+  <div class="container-xl py-4" id="mainContainer">
+    <div class="row g-4 justify-content-center">
+
+      <!-- ===== LEFT SIDEBAR ===== -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <div class="sidebar-card">
+          <div class="sidebar-profile">
+            <div class="sidebar-avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <h6 class="sidebar-username">Welcome Back!</h6>
+            <p class="sidebar-sub">Share what's on your mind</p>
+          </div>
+          <hr class="sidebar-divider" />
+          <ul class="sidebar-nav">
+            <li class="sidebar-nav-item active">
+              <i class="bi bi-house-fill"></i> Home Feed
+            </li>
+            <li class="sidebar-nav-item">
+              <i class="bi bi-heart-fill"></i> Liked Posts
+            </li>
+            <li class="sidebar-nav-item">
+              <i class="bi bi-bookmark-fill"></i> Saved
+            </li>
+            <li class="sidebar-nav-item">
+              <i class="bi bi-people-fill"></i> Friends
+            </li>
+          </ul>
+        </div>
+
+        <!-- Stats Card -->
+        <div class="sidebar-card mt-3">
+          <h6 class="sidebar-stats-title">Your Stats</h6>
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-num" id="totalPostsStat">0</span>
+              <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num" id="totalLikesStat">0</span>
+              <span class="stat-label">Likes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MAIN FEED ===== -->
+      <div class="col-lg-6 col-md-10">
+
+        <!-- Mobile Search Bar -->
+        <div class="d-md-none mb-3">
+          <div class="search-wrapper w-100">
+            <i class="bi bi-search search-icon"></i>
+            <input
+              type="text"
+              id="searchInputMobile"
+              class="search-input"
+              placeholder="Search by username..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- ===== CREATE POST CARD ===== -->
+        <div class="create-post-card" id="createPostCard">
+          <div class="create-post-header">
+            <div class="create-avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <input
+              type="text"
+              id="usernameInput"
+              class="username-input"
+              placeholder="Your name..."
+              maxlength="30"
+              autocomplete="off"
+            />
+          </div>
+
+          <textarea
+            id="postContent"
+            class="post-textarea"
+            placeholder="What's on your mind? Share your thoughts... ✨"
+            maxlength="500"
+          ></textarea>
+
+          <!-- Character Counter (Bonus Feature) -->
+          <div class="char-counter-row">
+            <span id="charCounter" class="char-counter">0 / 500</span>
+            <div class="post-actions-row">
+              <button class="action-pill" title="Add Emoji">
+                <i class="bi bi-emoji-smile"></i>
+              </button>
+              <button class="action-pill" title="Add Image">
+                <i class="bi bi-image"></i>
+              </button>
+              <button class="action-pill" title="Add Location">
+                <i class="bi bi-geo-alt"></i>
+              </button>
+              <button class="btn-post" id="postBtn">
+                <i class="bi bi-send-fill me-2"></i>Post
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SEARCH RESULT NOTICE ===== -->
+        <div id="searchNotice" class="search-notice d-none">
+          <i class="bi bi-search me-2"></i>
+          <span id="searchNoticeText"></span>
+          <button class="clear-search-btn" id="clearSearchBtn">
+            <i class="bi bi-x-circle-fill"></i> Clear
+          </button>
+        </div>
+
+        <!-- ===== POSTS FEED ===== -->
+        <div id="postsFeed">
+          <!-- Posts injected here by JS -->
+        </div>
+
+        <!-- ===== EMPTY STATE ===== -->
+        <div id="emptyState" class="empty-state d-none">
+          <div class="empty-icon">
+            <i class="bi bi-journal-text"></i>
+          </div>
+          <h5>No posts yet</h5>
+          <p>Be the first to share something!</p>
+        </div>
+
+        <!-- ===== NO SEARCH RESULTS ===== -->
+        <div id="noSearchResult" class="empty-state d-none">
+          <div class="empty-icon">
+            <i class="bi bi-person-x"></i>
+          </div>
+          <h5>No results found</h5>
+          <p>No posts from that username.</p>
+        </div>
+
+      </div>
+
+      <!-- ===== RIGHT SIDEBAR ===== -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <div class="sidebar-card">
+          <h6 class="sidebar-stats-title mb-3">
+            <i class="bi bi-fire text-danger me-1"></i> Trending
+          </h6>
+          <div class="trending-list">
+            <div class="trending-item">#GoodVibes</div>
+            <div class="trending-item">#TechTalks</div>
+            <div class="trending-item">#DailyLife</div>
+            <div class="trending-item">#Motivation</div>
+            <div class="trending-item">#Photography</div>
+          </div>
+        </div>
+
+        <div class="sidebar-card mt-3">
+          <h6 class="sidebar-stats-title mb-3">
+            <i class="bi bi-people-fill me-1"></i> Suggestions
+          </h6>
+          <div class="suggestion-list">
+            <div class="suggestion-item">
+              <div class="suggestion-avatar" style="background: #ff6b6b;">A</div>
+              <span class="suggestion-name">Ali Hassan</span>
+              <button class="follow-btn">Follow</button>
+            </div>
+            <div class="suggestion-item">
+              <div class="suggestion-avatar" style="background: #4ecdc4;">F</div>
+              <span class="suggestion-name">Fatima Khan</span>
+              <button class="follow-btn">Follow</button>
+            </div>
+            <div class="suggestion-item">
+              <div class="suggestion-avatar" style="background: #a29bfe;">U</div>
+              <span class="suggestion-name">Usman Ali</span>
+              <button class="follow-btn">Follow</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================================================
+       BOOTSTRAP MODAL — Edit Post (Mandatory Requirement)
+       =================================================== -->
+  <div
+    class="modal fade"
+    id="editModal"
+    tabindex="-1"
+    aria-labelledby="editModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content edit-modal-content">
+
+        <div class="modal-header edit-modal-header">
+          <div class="d-flex align-items-center gap-2">
+            <div class="modal-icon"><i class="bi bi-pencil-fill"></i></div>
+            <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
+          </div>
+          <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="modal-body edit-modal-body">
+          <label class="edit-label">Update your post content:</label>
+          <textarea
+            id="editPostContent"
+            class="edit-textarea"
+            maxlength="500"
+            placeholder="Write something..."
+          ></textarea>
+          <!-- Character counter in modal -->
+          <div class="d-flex justify-content-end mt-1">
+            <span id="editCharCounter" class="char-counter">0 / 500</span>
+          </div>
+        </div>
+
+        <div class="modal-footer edit-modal-footer">
+          <button type="button" class="btn-cancel" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-1"></i>Cancel
+          </button>
+          <button type="button" class="btn-update" id="updatePostBtn">
+            <i class="bi bi-check-circle-fill me-1"></i>Update Post
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="appToast" class="app-toast" role="alert" aria-live="assertive">
+      <i class="bi bi-check-circle-fill toast-icon" id="toastIcon"></i>
+      <span id="toastMessage">Action completed!</span>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="app.js"></script>
+</body>
+</html>
